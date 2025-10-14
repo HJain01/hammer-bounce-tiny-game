@@ -6,7 +6,6 @@ signal OnUpdateScore(score: int)
 @onready var sprite: Sprite2D = $Sprite
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var audio: AudioStreamPlayer = $AudioStreamPlayer
-@onready var hammer: Area2D = $Hammer
 
 var take_damage_sfx: AudioStream = preload("res://Audio/take_damage.wav")
 var coin_sfx: AudioStream = preload("res://Audio/coin.wav")
@@ -27,7 +26,6 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 
 	handle_movement_input(delta)
-	handle_bounce(delta)
 	move_and_slide()
 
 func _process(_delta):
@@ -49,12 +47,10 @@ func handle_movement_input(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y -= jump_force
 
-func handle_bounce(delta):
-	if Input.is_action_just_pressed("strike"):
-		pass
-
 func manage_animation():
-	if not is_on_floor():
+	if Input.is_action_pressed("strike") or animation.current_animation == "strike":
+		animation.play("strike")
+	elif not is_on_floor():
 		animation.play("jump")
 	elif move_input != 0:
 		animation.play("move")
