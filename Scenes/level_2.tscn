@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=4 uid="uid://b0adhrxjh5pdw"]
+
+[ext_resource type="Script" uid="uid://dmnfwt3qbj883" path="res://Scripts/Global/background_parallax.gd" id="1_055b2"]
+[ext_resource type="Texture2D" uid="uid://dtyrhrql04mdx" path="res://Sprites/Backgrounds/backgroundDesert.png" id="2_055b2"]
+[ext_resource type="TileSet" uid="uid://cgk223vwsbsh" path="res://Sprites/Tiles/new_tile_set.tres" id="3_uhnj4"]
+[ext_resource type="PackedScene" uid="uid://dmd8niiojaodc" path="res://Scenes/player.tscn" id="4_42uki"]
+[ext_resource type="PackedScene" uid="uid://vko6dtp2rbbh" path="res://Scenes/enemy.tscn" id="5_t7v2y"]
+[ext_resource type="PackedScene" uid="uid://dai7nqs7r5jsv" path="res://Scenes/coin.tscn" id="6_ait6c"]
+[ext_resource type="PackedScene" uid="uid://bpvdg5l3vh5to" path="res://Scenes/end_flag.tscn" id="7_vcilj"]
+[ext_resource type="PackedScene" uid="uid://biefby233s7ac" path="res://Scenes/menu.tscn" id="8_2mgoq"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+modulate = Color(0.991, 1, 0.73, 1)
+script = ExtResource("1_055b2")
+
+[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
+position = Vector2(-1024, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_055b2")
+
+[node name="BackgroundSprite2" type="Sprite2D" parent="Background"]
+position = Vector2(-512, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_055b2")
+
+[node name="BackgroundSprite3" type="Sprite2D" parent="Background"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_055b2")
+
+[node name="BackgroundSprite4" type="Sprite2D" parent="Background"]
+position = Vector2(512, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_055b2")
+
+[node name="BackgroundSprite5" type="Sprite2D" parent="Background"]
+position = Vector2(1024, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_055b2")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD//wEAAAACAAYAAAAAAAEAAAACAAYAAAD+/wAAAAABAAMAAAD//wAAAAACAAMAAAAAAAAAAAACAAMAAAABAAAAAAADAAMAAAABAAEAAAADAAYAAAABAAIAAAADAAYAAAABAAMAAAADAAYAAAABAAQAAAADAAcAAAAAAAQAAAACAAcAAAD//wQAAAACAAcAAAD+/wQAAAABAAcAAAD+/wMAAAABAAYAAAD+/wIAAAABAAYAAAD+/wEAAAABAAYAAAD//wIAAAACAAYAAAD//wMAAAACAAYAAAAAAAMAAAACAAYAAAAAAAIAAAACAAYAAAAEAAAAAAABAAMAAAAEAAEAAAABAAYAAAAEAAIAAAABAAYAAAAEAAMAAAABAAYAAAAEAAQAAAABAAcAAAAFAAQAAAACAAcAAAAFAAMAAAACAAYAAAAFAAIAAAACAAYAAAAFAAEAAAACAAYAAAAFAAAAAAACAAYAAAAFAP//AAABAAMAAAAGAP//AAACAAYAAAAGAP7/AAABAAMAAAAGAAAAAAACAAYAAAAGAAEAAAACAAYAAAAGAAIAAAACAAYAAAAGAAMAAAACAAYAAAAGAAQAAAACAAcAAAAHAAQAAAACAAcAAAAHAAMAAAACAAYAAAAHAAIAAAACAAYAAAAHAAEAAAACAAYAAAAHAAAAAAACAAYAAAAHAP//AAACAAYAAAAHAP7/AAACAAYAAAAHAP3/AAABAAMAAAAIAP3/AAACAAMAAAAJAP3/AAACAAMAAAAKAP3/AAACAAMAAAALAP3/AAACAAMAAAAMAP3/AAADAAMAAAAMAP7/AAACAAYAAAANAP7/AAADAAMAAAANAP//AAACAAYAAAAOAP//AAADAAMAAAAOAAAAAAADAAYAAAAOAAEAAAADAAYAAAAOAAIAAAADAAYAAAAOAAMAAAADAAYAAAAOAAQAAAADAAcAAAANAAQAAAACAAcAAAAMAAQAAAACAAcAAAALAAQAAAACAAcAAAAKAAQAAAACAAcAAAAJAAQAAAACAAcAAAAIAAQAAAACAAcAAAAIAAMAAAACAAYAAAAJAAMAAAACAAYAAAAKAAMAAAACAAYAAAALAAMAAAACAAYAAAAMAAMAAAACAAYAAAANAAMAAAACAAYAAAANAAIAAAACAAYAAAANAAEAAAACAAYAAAANAAAAAAACAAYAAAAMAAAAAAACAAYAAAAMAP//AAACAAYAAAALAP//AAACAAYAAAALAP7/AAACAAYAAAAKAP7/AAACAAYAAAAJAP7/AAACAAYAAAAIAP7/AAACAAYAAAAIAP//AAACAAYAAAAIAAAAAAACAAYAAAAJAP//AAACAAYAAAAKAP//AAACAAYAAAALAAAAAAACAAYAAAALAAEAAAACAAYAAAALAAIAAAACAAYAAAAMAAEAAAACAAYAAAAMAAIAAAACAAYAAAAKAAEAAAACAAYAAAAJAAEAAAACAAYAAAAIAAEAAAACAAYAAAAIAAIAAAACAAYAAAAJAAIAAAACAAYAAAAKAAIAAAACAAYAAAAJAAAAAAACAAYAAAAKAAAAAAACAAYAAAASAP//AAAAAAMAAAASAAAAAAAAAAYAAAASAAEAAAAAAAcAAAAWAAAAAAAAAAMAAAAWAAEAAAAAAAYAAAAWAAIAAAAAAAcAAAAaAP//AAAAAAMAAAAaAAAAAAAAAAYAAAAaAAEAAAAAAAcAAAAeAP//AAABAAMAAAAfAP//AAACAAMAAAAgAP//AAACAAMAAAAhAP//AAACAAMAAAAiAP//AAACAAMAAAAjAP//AAADAAMAAAAjAAAAAAADAAYAAAAjAAEAAAADAAcAAAAiAAEAAAACAAcAAAAhAAEAAAACAAcAAAAgAAEAAAACAAcAAAAfAAEAAAACAAcAAAAeAAAAAAABAAYAAAAeAAEAAAABAAcAAAAfAAAAAAACAAYAAAAgAAAAAAACAAYAAAAhAAAAAAACAAYAAAAiAAAAAAACAAYAAAA=")
+tile_set = ExtResource("3_uhnj4")
+
+[node name="Player" parent="." instance=ExtResource("4_42uki")]
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("5_t7v2y")]
+position = Vector2(55, 21)
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("5_t7v2y")]
+position = Vector2(298, 6)
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("5_t7v2y")]
+position = Vector2(370, 10)
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource("5_t7v2y")]
+position = Vector2(443, 3)
+
+[node name="Enemy5" parent="Enemies" instance=ExtResource("5_t7v2y")]
+position = Vector2(514, 2)
+
+[node name="Enemy6" parent="Enemies" instance=ExtResource("5_t7v2y")]
+position = Vector2(287, -48)
+move_direction = Vector2(300, 0)
+move_speed = 35.0
+
+[node name="Coins" type="Node" parent="."]
+
+[node name="Coin2" parent="Coins" instance=ExtResource("6_ait6c")]
+position = Vector2(81, -8)
+
+[node name="Coin3" parent="Coins" instance=ExtResource("6_ait6c")]
+position = Vector2(135, -62)
+
+[node name="Coin4" parent="Coins" instance=ExtResource("6_ait6c")]
+position = Vector2(261, -26)
+
+[node name="Coin5" parent="Coins" instance=ExtResource("6_ait6c")]
+position = Vector2(334, -26)
+
+[node name="Coin6" parent="Coins" instance=ExtResource("6_ait6c")]
+position = Vector2(405, -8)
+
+[node name="Coin7" parent="Coins" instance=ExtResource("6_ait6c")]
+position = Vector2(477, -26)
+
+[node name="Coin8" parent="Coins" instance=ExtResource("6_ait6c")]
+position = Vector2(550, -25)
+
+[node name="EndFlag" parent="." instance=ExtResource("7_vcilj")]
+position = Vector2(596, -27)
+scene_to_load = ExtResource("8_2mgoq")
+
+[connection signal="body_entered" from="Enemies/Enemy" to="Enemies/Enemy" method="_on_body_entered"]
+[connection signal="body_entered" from="Enemies/Enemy2" to="Enemies/Enemy2" method="_on_body_entered"]
+[connection signal="body_entered" from="Enemies/Enemy3" to="Enemies/Enemy3" method="_on_body_entered"]
+[connection signal="body_entered" from="Enemies/Enemy4" to="Enemies/Enemy4" method="_on_body_entered"]
+[connection signal="body_entered" from="Enemies/Enemy5" to="Enemies/Enemy5" method="_on_body_entered"]
+[connection signal="body_entered" from="Enemies/Enemy6" to="Enemies/Enemy6" method="_on_body_entered"]
