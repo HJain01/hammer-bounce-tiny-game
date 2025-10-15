@@ -4,16 +4,14 @@ extends CanvasLayer
 var hearts: Array = []
 
 @onready var score_text: Label = $ScoreText
-@onready var player = get_parent()
 
 func _ready():
 	hearts = health_container.get_children()
 
-	player.OnUpdateHealth.connect(update_hearts)
-	player.OnUpdateScore.connect(update_score)
 
-func update_hearts(health: int):
+func _on_player_on_update_health(health:int):
 	hearts[health - 1].visible = false
-	
-func update_score(score: int):
+
+
+func _on_player_on_update_score(score:int):
 	score_text.text = "Score: %d" % score
