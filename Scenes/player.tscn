@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://dmd8niiojaodc"]
+[gd_scene load_steps=20 format=3 uid="uid://dmd8niiojaodc"]
 
 [ext_resource type="Script" uid="uid://bewg1eayec067" path="res://Scripts/Player/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://cwaijeevvubin" path="res://Sprites/Characters/character_0000.png" id="1_v0iea"]
 [ext_resource type="Script" uid="uid://c4tpyg534ulld" path="res://Scripts/Global/camera_shake.gd" id="3_3smsa"]
 [ext_resource type="Texture2D" uid="uid://drt7qeg667do" path="res://Sprites/Characters/character_0001.png" id="3_6t5aa"]
 [ext_resource type="Script" uid="uid://c34xhr8bg0kku" path="res://Scripts/Player/player_ui.gd" id="4_fkybt"]
+[ext_resource type="Texture2D" uid="uid://cppqiwujwgsg0" path="res://Sprites/Characters/character_0009.png" id="4_tx1dd"]
 [ext_resource type="Texture2D" uid="uid://v83lwmriuf61" path="res://Sprites/Objects/tile_0044.png" id="4_vgqql"]
 [ext_resource type="Texture2D" uid="uid://88cpchbcxrfj" path="res://Sprites/Characters/character_0006.png" id="5_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://dp6c3me4h8ewc" path="res://Sprites/Characters/character_0007.png" id="6_tx1dd"]
@@ -35,7 +36,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HammerCollisionShape2D:disabled")
+tracks/1/path = NodePath("Hammer/HammerCollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -43,6 +44,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hammer:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_vgqql"]
@@ -111,7 +124,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("HammerCollisionShape2D:disabled")
+tracks/1/path = NodePath("Hammer/HammerCollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -119,6 +132,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hammer:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x3wgy"]
@@ -147,14 +172,22 @@ position = Vector2(0, -12)
 shape = SubResource("CapsuleShape2D_cvnsp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -50)
+position = Vector2(2, 5)
 zoom = Vector2(3, 3)
 script = ExtResource("3_3smsa")
 
-[node name="HammerCollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Hammer" type="Area2D" parent="."]
+visible = false
+
+[node name="HammerCollisionShape2D" type="CollisionShape2D" parent="Hammer"]
 position = Vector2(0, 13)
 shape = SubResource("CapsuleShape2D_f1ek2")
 disabled = true
+
+[node name="HammerSprite" type="Sprite2D" parent="Hammer"]
+position = Vector2(0, 12.5)
+scale = Vector2(0.291667, 1.04167)
+texture = ExtResource("4_tx1dd")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -196,3 +229,4 @@ script = ExtResource("6_x3wgy")
 [connection signal="OnUpdateHealth" from="." to="Camera2D" method="_on_player_on_update_health"]
 [connection signal="OnUpdateHealth" from="." to="CanvasLayer" method="_on_player_on_update_health"]
 [connection signal="OnUpdateScore" from="." to="CanvasLayer" method="_on_player_on_update_score"]
+[connection signal="body_entered" from="Hammer" to="." method="_on_hammer_body_entered"]

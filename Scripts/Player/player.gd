@@ -6,6 +6,8 @@ signal OnUpdateScore(score: int)
 @onready var sprite: Sprite2D = $Sprite
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var audio: AudioStreamPlayer = $AudioStreamPlayer
+@onready var hammer: CollisionShape2D = $HammerCollisionShape2D
+@onready var camera: Camera2D = $Camera2D
 
 var take_damage_sfx: AudioStream = preload("res://Audio/take_damage.wav")
 var coin_sfx: AudioStream = preload("res://Audio/coin.wav")
@@ -13,9 +15,9 @@ var coin_sfx: AudioStream = preload("res://Audio/coin.wav")
 @export var move_speed: float = 100
 @export var acceleration: float = 50
 @export var braking: float = 20
-@export var gravity: float = 500
+@export var gravity: float = 400
 @export var jump_force: float = 200
-@export var bounce_force: float = 1.5
+@export var bounce_force: float = 5
 
 @export var health: int = 3
 
@@ -48,7 +50,7 @@ func handle_movement_input(delta):
 		velocity.y -= jump_force
 
 func manage_animation():
-	if Input.is_action_pressed("strike") or animation.current_animation == "strike":
+	if Input.is_action_just_pressed("strike") or animation.current_animation == "strike":
 		animation.play("strike")
 	elif not is_on_floor():
 		animation.play("jump")
@@ -60,13 +62,11 @@ func manage_animation():
 func increase_score(amount: int):
 	PlayerStats.score += amount
 	OnUpdateScore.emit(PlayerStats.score)
-	play_sound(coin_sfx)
 
 func take_damage(amount: int):
 	health -= amount
 	OnUpdateHealth.emit(health)
 	damage_flash()
-	play_sound(take_damage_sfx)
 
 	if health <= 0:
 		call_deferred("game_over")
@@ -80,11 +80,6 @@ func damage_flash():
 	await get_tree().create_timer(.5).timeout
 	sprite.modulate = Color.WHITE
 
-func play_sound(sound: AudioStream):
-	audio.stream = sound
-	audio.play()
-
-func bounce():
-	print("Before bounce %d" % velocity.y)
-	velocity.y = -1 * (velocity.y * bounce_force)
-	print("After bounce %d" % velocity.y)
+func _on_hammer_body_entered(_body):
+	velocity.y = lerp(-1 * abs(velocity.y), -1 * (abs(velocity.y) + bounce_force), .8)
+	move_and_slide()
